@@ -22,8 +22,7 @@ type NodeData = {
   approval_roles: string[];
 };
 
-// Graph node
-type GraphNode = {
+export type GraphNode = {
   id: string;
   type: string;
   position: Position;
