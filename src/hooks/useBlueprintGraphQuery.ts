@@ -1,10 +1,13 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-import { fetchForms, type FetchFormsParams } from "@/api/fetchForms.ts";
+import {
+  type FetchFormsParams,
+  getBlueprintsGraphData,
+} from "@/api/getBlueprintsGraphData.ts";
 
-type FunctionData = Awaited<ReturnType<typeof fetchForms>>;
+type FunctionData = Awaited<ReturnType<typeof getBlueprintsGraphData>>;
 const FETCH_FORMS_KEY = ["forms"];
 
-export const useFetchForms = <TData = FunctionData>(
+export const useBlueprintGraphQuery = <TData = FunctionData>(
   apiParams: FetchFormsParams,
   options: Omit<
     UseQueryOptions<FunctionData, Error, TData>,
@@ -15,6 +18,6 @@ export const useFetchForms = <TData = FunctionData>(
     staleTime: Infinity,
     ...options,
     queryKey: FETCH_FORMS_KEY,
-    queryFn: () => fetchForms(apiParams),
+    queryFn: () => getBlueprintsGraphData(apiParams),
   });
 };

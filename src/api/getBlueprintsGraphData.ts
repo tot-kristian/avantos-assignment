@@ -2,7 +2,7 @@ import { apiClient } from "@/api/client.ts";
 
 export type FetchFormsParams = { tenantId: string; blueprintId: string };
 
-export const fetchForms = async ({
+export const getBlueprintsGraphData = async ({
   tenantId,
   blueprintId,
 }: FetchFormsParams) => {

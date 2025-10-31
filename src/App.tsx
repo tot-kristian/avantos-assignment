@@ -1,13 +1,13 @@
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Blueprint } from "@/components/Blueprint/Blueprint.tsx";
+import { Graph } from "@/components/Graph/Graph.tsx";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Blueprint />
+      <Graph />
     </QueryClientProvider>
   );
 }
