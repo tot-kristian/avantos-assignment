@@ -1,4 +1,3 @@
-import "./App.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Graph } from "@/components/Graph/Graph.tsx";
 

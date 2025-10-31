@@ -1,11 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card.tsx";
 import { FileSpreadsheet } from "lucide-react";
 
-type NodeProps = { title: string; label: string };
+type NodeProps = { title: string; label: string, nodeClick: () => void };
 
-export const Node = ({ title, label }: NodeProps) => {
+export const Node = ({ title, label, nodeClick }: NodeProps) => {
   return (
-    <Card className="rounded-xl shadow-sm border-zinc-200">
+    <Card className="rounded-xl shadow-sm border-zinc-200" onClick={() => nodeClick()}>
       <CardContent className="flex items-center justify-start gap-4 px-2">
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-100">
           <FileSpreadsheet className="h-7 w-7 text-indigo-600" />
