@@ -2,11 +2,14 @@ import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import {
   type FetchFormsParams,
   getBlueprintsGraphData,
-} from "@/api/getBlueprintsGraphData.ts";
+} from "@/features/api/getBlueprintsGraphData.ts";
 
 type FunctionData = Awaited<ReturnType<typeof getBlueprintsGraphData>>;
-const getFetchFormKeys = (params: FetchFormsParams) => ["blueprint-graph", params.tenantId, params.blueprintId];
-
+const getFetchFormKeys = (params: FetchFormsParams) => [
+  "blueprint-graph",
+  params.tenantId,
+  params.blueprintId,
+];
 
 export const useBlueprintGraphQuery = <TData = FunctionData>(
   apiParams: FetchFormsParams,

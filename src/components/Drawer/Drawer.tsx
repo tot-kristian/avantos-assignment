@@ -26,7 +26,7 @@ export const Drawer = ({
 }: DrawerProps) => {
   return (
     <Sheet open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
-      <SheetContent className="overflow-auto">
+      <SheetContent className="overflow-auto !w-[600px] !max-w-[600px] sm:!max-w-[600px]">
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>
           {description && <SheetDescription>{description}</SheetDescription>}

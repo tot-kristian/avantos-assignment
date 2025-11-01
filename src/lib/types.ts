@@ -5,7 +5,7 @@ type Position = {
 
 type SLADuration = {
   number: number;
-  unit: 'minutes' | 'hours' | 'days';
+  unit: "minutes" | "hours" | "days";
 };
 
 type NodeData = {
@@ -35,17 +35,17 @@ type GraphEdge = {
 };
 
 type AvantosType =
-  | 'button'
-  | 'checkbox-group'
-  | 'object-enum'
-  | 'short-text'
-  | 'multi-select'
-  | 'multi-line-text';
+  | "button"
+  | "checkbox-group"
+  | "object-enum"
+  | "short-text"
+  | "multi-select"
+  | "multi-line-text";
 
-type JSONSchemaProperty = {
+export type JSONSchemaProperty = {
   avantos_type: AvantosType;
   title?: string;
-  type: 'string' | 'object' | 'array';
+  type: "string" | "object" | "array";
   format?: string;
   enum?: unknown[] | null;
   items?: {
@@ -56,12 +56,16 @@ type JSONSchemaProperty = {
 };
 
 type FieldSchema = {
-  type: 'object';
+  type: "object";
   properties: Record<string, JSONSchemaProperty>;
   required: string[];
 };
 
-type UISchemaElementType = 'Control' | 'Button' | 'VerticalLayout' | 'HorizontalLayout';
+type UISchemaElementType =
+  | "Control"
+  | "Button"
+  | "VerticalLayout"
+  | "HorizontalLayout";
 
 type UISchemaElement = {
   type: UISchemaElementType;
@@ -77,7 +81,7 @@ type UISchema = {
 };
 
 type PayloadField = {
-  type: 'form_field' | 'static';
+  type: "form_field" | "static";
   value: string;
 };
 
@@ -87,7 +91,7 @@ type DynamicFieldConfig = {
   endpoint_id: string;
 };
 
-type Form = {
+export type Form = {
   id: string;
   name: string;
   description: string;

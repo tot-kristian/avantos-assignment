@@ -1,7 +1,7 @@
-import { useBlueprintGraphQuery } from "@/hooks/useBlueprintGraphQuery.ts";
-import { Node } from "@/components/Node/Node.tsx";
+import { useBlueprintGraphQuery } from "@/features/hooks/queries/useBlueprintGraphQuery.ts";
+import { Node } from "@/features/components/Node/Node.tsx";
 import { useState } from "react";
-import { PrefillSheet } from "@/components/PrefillSheet/PrefillSheet.tsx";
+import { PrefillSheet } from "@/features/components/PrefillSheet/PrefillSheet.tsx";
 import type { GraphNode } from "@/lib/types.ts";
 
 export const Graph = () => {
@@ -13,10 +13,13 @@ export const Graph = () => {
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
 
   if (isPending) return <div>Loading...</div>;
-
+  if (!data) return <div>No data available</div>;
   const onPrefillSheetClose = () => {
     setSelectedNode(null);
   };
+
+  console.log(data);
+
   return (
     <>
       <div className="flex flex-col gap-4">
@@ -31,7 +34,11 @@ export const Graph = () => {
           );
         })}
       </div>
-      <PrefillSheet data={selectedNode} onClose={onPrefillSheetClose} />
+      <PrefillSheet
+        graph={data}
+        node={selectedNode}
+        onClose={onPrefillSheetClose}
+      />
     </>
   );
 };
