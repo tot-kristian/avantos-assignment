@@ -78,10 +78,10 @@ export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
                   {`${selected.group} - ${selected.label}`}
                 </div>
                 <div className="rounded-md border p-3 text-sm">
-                  <InfoRow key="Group" value={selected.group} />
-                  <InfoRow key="Field" value={selected.label} />
+                  <InfoRow label="Group" value={selected.group} />
+                  <InfoRow label="Field" value={selected.label} />
                   <InfoRow
-                    key="Type"
+                    label="Type"
                     value={
                       selected.valueType === "string"
                         ? selected.format
@@ -91,12 +91,12 @@ export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
                     }
                   />
                   <InfoRow
-                    key="Component key"
+                    label="Component key"
                     value={selected.entry.component_key}
                     fontMono
                   />
                   <InfoRow
-                    key="Output key"
+                    label="Output key"
                     value={selected.entry.output_key}
                     fontMono
                   />

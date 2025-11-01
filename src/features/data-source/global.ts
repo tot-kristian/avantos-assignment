@@ -8,7 +8,7 @@ export const GlobalSource: DataSource = {
       {
         id: "global:action.title",
         group: "Action Properties",
-        label: "Action Properties • title",
+        label: "title",
         valueType: "string",
         entry: {
           type: "metadata",
@@ -20,7 +20,7 @@ export const GlobalSource: DataSource = {
       {
         id: "global:client.email",
         group: "Client Organization",
-        label: "Client Org • contact.email",
+        label: "contact.email",
         valueType: "string",
         format: "email",
         entry: {
