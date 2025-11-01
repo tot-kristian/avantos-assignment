@@ -1,10 +1,11 @@
 import type { ActionBlueprintGraphResponse, GraphNode } from "@/lib/types.ts";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import {
   getFormFieldsWithPrefill,
   getFormForNode,
 } from "@/features/model/graph-helpers.ts";
+import { PrefillModal } from "@/features/components/PrefillModal/PrefillModal.tsx";
 
 type Props = {
   graph: ActionBlueprintGraphResponse;
@@ -15,10 +16,10 @@ export const PrefillSheetContent = ({ graph, node }: Props) => {
     () => getFormForNode(graph, node.data.component_id),
     [graph, node],
   );
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   if (!form) return null;
 
   const formFieldsWithPrefill = getFormFieldsWithPrefill(node, form);
-
   return (
     <>
       {formFieldsWithPrefill.map(({ key, hasMapper }) => {
@@ -26,6 +27,7 @@ export const PrefillSheetContent = ({ graph, node }: Props) => {
           <div
             key={key}
             className="flex items-center justify-between border rounded p-2"
+            onClick={() => setModalOpen(true)}
           >
             <div>
               <div className="font-medium">{key}</div>
@@ -39,6 +41,12 @@ export const PrefillSheetContent = ({ graph, node }: Props) => {
           </div>
         );
       })}
+      <PrefillModal
+        open={modalOpen}
+        setModalOpen={setModalOpen}
+        graph={graph}
+        node={node}
+      />
     </>
   );
 };

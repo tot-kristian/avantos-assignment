@@ -42,10 +42,12 @@ type AvantosType =
   | "multi-select"
   | "multi-line-text";
 
+export type JSONSchemaType = "string" | "object" | "array";
+
 export type JSONSchemaProperty = {
   avantos_type: AvantosType;
   title?: string;
-  type: "string" | "object" | "array";
+  type: JSONSchemaType;
   format?: string;
   enum?: unknown[] | null;
   items?: {

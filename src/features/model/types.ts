@@ -1,3 +1,8 @@
+import type {
+  ActionBlueprintGraphResponse,
+  JSONSchemaType,
+} from "@/lib/types.ts";
+
 export type ApiMappingEntry = {
   type: string;
   component_key: string;
@@ -5,14 +10,22 @@ export type ApiMappingEntry = {
   is_metadata: boolean;
 };
 
-export type FieldKind = "text" | "array" | "object";
+export type FieldKind = JSONSchemaType;
+export type FieldFormat = "email" | "date" | "uri" | undefined;
 
-export type TargetField = { name: string; label: string; kind: FieldKind };
+export type TargetField = {
+  name: string;
+  label: string;
+  format?: FieldFormat;
+  valueType: FieldKind;
+};
 
 export type DataSourceItem = {
   id: string;
   group: string;
-  label: FieldKind;
+  label: string;
+  valueType: FieldKind;
+  format?: FieldFormat;
   entry: ApiMappingEntry;
 };
 
@@ -20,7 +33,7 @@ export interface DataSource {
   id: string;
   label: string;
   listFor(args: {
-    graph: any;
+    graph: ActionBlueprintGraphResponse;
     targetNodeId: string;
     targetField?: TargetField;
   }): DataSourceItem[];
