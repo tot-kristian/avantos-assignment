@@ -72,3 +72,31 @@ export const getDirectParentNodes = (
     (n) => n.id === parentNodes.find((p) => p.source === n.id)?.source,
   );
 };
+
+export const getAllParentNodesDFS = (
+  graph: ActionBlueprintGraphResponse,
+  nodeId: string,
+  visited = new Set<string>(),
+): GraphNode[] => {
+  const parents = getDirectParentNodes(graph, nodeId);
+  for (const parent of parents) {
+    if (!visited.has(parent.id)) {
+      visited.add(parent.id);
+      getAllParentNodesDFS(graph, parent.id, visited);
+    }
+  }
+
+  return Array.from(visited).map((id) => graph.nodes.find((n) => n.id === id)!);
+};
+
+export const getTransitiveParentNodes = (
+  graph: ActionBlueprintGraphResponse,
+  nodeId: string,
+): GraphNode[] => {
+  const directParents = new Set(
+    getDirectParentNodes(graph, nodeId).map((p) => p.id),
+  );
+  const allParents = getAllParentNodesDFS(graph, nodeId);
+
+  return allParents.filter((node) => !directParents.has(node.id));
+};

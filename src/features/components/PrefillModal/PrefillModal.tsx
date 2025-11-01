@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { DirectParentDataSource } from "@/features/data-source/direct-parent.ts";
+import { TransitiveParentDataSource } from "@/features/data-source/transitive-parent.ts";
 
 type Props = {
   open: boolean;
@@ -18,7 +19,11 @@ type Props = {
 };
 
 export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
-  const dataSources = [GlobalSource, DirectParentDataSource];
+  const dataSources = [
+    GlobalSource,
+    DirectParentDataSource,
+    TransitiveParentDataSource,
+  ];
 
   const globalDataSource = dataSources
     .flatMap((ds) => ds.listFor({ graph, targetNodeId: node.id }))
