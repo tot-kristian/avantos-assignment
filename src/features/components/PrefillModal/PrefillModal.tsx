@@ -38,7 +38,6 @@ export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
                     {items.map((item) => (
                       <div key={item.id}>{item.label}</div>
                     ))}
-                    {items.map((item) => item.label).join(", ")}
                   </AccordionContent>
                 </AccordionItem>
               );
