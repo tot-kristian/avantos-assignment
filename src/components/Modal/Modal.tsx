@@ -25,7 +25,7 @@ export const Modal = ({
 }: ModalProps) => {
   const sizeClasses =
     size === "wide"
-      ? "max-w-3xl"
+      ? "max-w-full"
       : size === "fullscreen"
         ? "w-[95vw] h-[95vh] max-w-none"
         : "sm:max-w-lg";
