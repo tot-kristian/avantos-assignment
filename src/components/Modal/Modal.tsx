@@ -32,7 +32,9 @@ export const Modal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`${sizeClasses}`}>
+      <DialogContent
+        className={`${sizeClasses} overflow-y-scroll max-h-screen`}
+      >
         {(title || description) && (
           <DialogHeader>
             {title && <DialogTitle>{title}</DialogTitle>}

@@ -27,7 +27,7 @@ export const TransitiveParentDataSource: DataSource = {
         return {
           id: `transitive:${node.id}:${f.name}`,
           group: node.data.name,
-          label: `${node.data.name} - ${f.label}`,
+          label: f.label,
           valueType: f.valueType,
           entry: {
             type: "form_field",

@@ -1,15 +1,12 @@
 import { Modal } from "@/components/Modal/Modal.tsx";
 import type { ActionBlueprintGraphResponse, GraphNode } from "@/lib/types.ts";
-import { GlobalSource } from "@/features/data-source/global.ts";
-import type { DataSourceItem } from "@/features/model/types.ts";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { DirectParentDataSource } from "@/features/data-source/direct-parent.ts";
-import { TransitiveParentDataSource } from "@/features/data-source/transitive-parent.ts";
+import { getAllDataSources } from "@/features/data-source/get-all-data-sources.ts";
 
 type Props = {
   open: boolean;
@@ -19,24 +16,7 @@ type Props = {
 };
 
 export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
-  const dataSources = [
-    GlobalSource,
-    DirectParentDataSource,
-    TransitiveParentDataSource,
-  ];
-
-  const globalDataSource = dataSources
-    .flatMap((ds) => ds.listFor({ graph, targetNodeId: node.id }))
-    .reduce<Record<string, DataSourceItem[]>>((acc, curr) => {
-      if (acc[curr.group]) {
-        acc[curr.group].push(curr);
-      } else {
-        acc[curr.group] = [curr];
-      }
-      return acc;
-    }, {});
-
-  console.log(globalDataSource);
+  const globalDataSource = getAllDataSources(graph, node);
 
   return (
     <Modal
@@ -55,6 +35,9 @@ export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
                 <AccordionItem value={group} key={group}>
                   <AccordionTrigger>{group}</AccordionTrigger>
                   <AccordionContent className="flex flex-col gap-4 text-balance">
+                    {items.map((item) => (
+                      <div key={item.id}>{item.label}</div>
+                    ))}
                     {items.map((item) => item.label).join(", ")}
                   </AccordionContent>
                 </AccordionItem>
