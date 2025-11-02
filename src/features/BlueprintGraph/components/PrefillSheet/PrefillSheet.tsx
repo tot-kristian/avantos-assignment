@@ -16,7 +16,7 @@ export const PrefillSheet = () => {
       title="Prefill Form"
       description="Configure the form prefill settings"
     >
-      <div className="grid gap-3">
+      <div className="grid gap-3" data-testid="prefill-sheet">
         {selectedNode && (
           <>
             <p>Node ID: {selectedNode.id}</p>
