@@ -25,16 +25,14 @@ export const Modal = ({
 }: ModalProps) => {
   const sizeClasses =
     size === "wide"
-      ? "max-w-full"
+      ? "min-w-fit"
       : size === "fullscreen"
         ? "min-w-auto min-h-[50vh] max-h-[95vh] max-w-none"
         : "sm:max-w-lg";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className={`${sizeClasses} overflow-y-scroll max-h-screen`}
-      >
+      <DialogContent className={`${sizeClasses}`}>
         {(title || description) && (
           <DialogHeader>
             {title && <DialogTitle>{title}</DialogTitle>}
@@ -43,7 +41,7 @@ export const Modal = ({
             )}
           </DialogHeader>
         )}
-        <div className="mt-2 overflow-y-auto">{children}</div>
+        <div className="mt-2">{children}</div>
       </DialogContent>
     </Dialog>
   );

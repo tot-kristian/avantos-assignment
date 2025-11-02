@@ -21,6 +21,7 @@ export const DataSourceList = ({
   onSelectItem,
   defaultExpandedGroup,
 }: DataSourceListProps) => {
+  console.log(">>> ", selectedItem);
   return (
     <Accordion
       type="multiple"
@@ -30,20 +31,18 @@ export const DataSourceList = ({
       {Object.entries(dataSources).map(([group, items]) => (
         <AccordionItem value={group} key={group} className="bg-accent">
           <AccordionTrigger>{group}</AccordionTrigger>
-          <AccordionContent className="space-y-2 pl-4">
+          <AccordionContent className="space-y-2 pl-4 pr-1">
             {items.map((item) => (
-              <button
+              <div
                 key={item.id}
-                type="button"
                 className={cn(
                   "text-sm text-left w-full p-2 rounded transition-colors hover:bg-accent",
-                  selectedItem?.id === item.id &&
-                    "bg-primary text-primary-foreground",
+                  selectedItem?.id === item.id && "border border-gray-300",
                 )}
                 onClick={() => onSelectItem(item)}
               >
                 {item.label}
-              </button>
+              </div>
             ))}
           </AccordionContent>
         </AccordionItem>

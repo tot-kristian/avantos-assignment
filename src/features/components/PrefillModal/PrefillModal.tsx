@@ -61,9 +61,9 @@ export const PrefillModal = ({
       onOpenChange={setModalOpen}
       title="Select data element to map"
       description="Select elements from the lists below"
-      size="fullscreen"
+      size="wide"
     >
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between gap-3 overflow-y-scroll max-h-[70vh]">
         <div>
           <span className="font-semibold">Available data</span>
           <DataSourceList
@@ -75,12 +75,12 @@ export const PrefillModal = ({
         </div>
         <div className="flex flex-col">
           <span className="font-semibold mb-3 text-sm">Details</span>
-          <div className="flex-1 border rounded-md bg-muted/30 p-4">
+          <div className="flex-1 border rounded-md bg-muted/30 p-4 min-w-[500px]">
             <DataSourceItemDetails item={selectedDataSourceItem} />
           </div>
         </div>
       </div>
-      <div className="flex justify-end gap-x-2">
+      <div className="flex justify-end gap-x-2 mt-3">
         <Button variant="outline" onClick={() => onClose()}>
           Cancel
         </Button>
