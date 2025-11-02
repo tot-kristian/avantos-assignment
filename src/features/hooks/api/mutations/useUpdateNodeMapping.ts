@@ -1,10 +1,14 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { getFetchBlueprintGraphKeys } from "@/features/hooks/queries/useBlueprintGraphQuery.ts";
+import { getFetchBlueprintGraphKeys } from "@/features/hooks/api/queries/useBlueprintGraphQuery.ts";
 import type { ApiMappingEntry } from "@/features/model/types.ts";
 import type { ActionBlueprintGraphResponse } from "@/lib/types.ts";
 
-export const useUpdateNodeMapping = (tenantId: string, blueprintId: string) => {
+export const useUpdateNodeMapping = (params: {
+  tenantId: string;
+  blueprintId: string;
+}) => {
   const qc = useQueryClient();
+
   const setField = ({
     nodeId,
     selectedField,
@@ -28,7 +32,7 @@ export const useUpdateNodeMapping = (tenantId: string, blueprintId: string) => {
     });
   };
 
-  const key = getFetchBlueprintGraphKeys({ tenantId, blueprintId });
+  const key = getFetchBlueprintGraphKeys(params);
 
   return { setField };
 };

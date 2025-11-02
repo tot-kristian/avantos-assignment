@@ -1,27 +1,27 @@
-import type { ActionBlueprintGraphResponse, GraphNode } from "@/lib/types.ts";
 import { Drawer } from "@/components/Drawer/Drawer.tsx";
 import { PrefillSheetContent } from "@/features/components/PrefillSheet/PrefillSheetContent.tsx";
+import { useGraph } from "@/features/hooks/useGraph.ts";
 
-type PrefillSheetProps = {
-  graph: ActionBlueprintGraphResponse;
-  node: GraphNode | null;
-  onClose: () => void;
-};
+export const PrefillSheet = () => {
+  const { selectedNode, setSelectedNode } = useGraph();
 
-export const PrefillSheet = ({ node, onClose, graph }: PrefillSheetProps) => {
+  const onPrefillSheetClose = () => {
+    setSelectedNode(null);
+  };
+
   return (
     <Drawer
-      open={!!node}
-      onClose={onClose}
+      open={!!selectedNode}
+      onClose={() => onPrefillSheetClose()}
       title="Prefill Form"
       description="Configure the form prefill settings"
     >
       <div className="grid gap-3">
-        {node && (
+        {selectedNode && (
           <>
-            <p>Node ID: {node.id}</p>
-            <p>Name: {node.data.name}</p>
-            <PrefillSheetContent graph={graph} node={node} />
+            <p>Node ID: {selectedNode.id}</p>
+            <p>Name: {selectedNode.data.name}</p>
+            <PrefillSheetContent />
           </>
         )}
       </div>

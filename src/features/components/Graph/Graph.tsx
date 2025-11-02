@@ -1,44 +1,22 @@
-import { useBlueprintGraphQuery } from "@/features/hooks/queries/useBlueprintGraphQuery.ts";
-import { Node } from "@/features/components/Node/Node.tsx";
-import { useState } from "react";
 import { PrefillSheet } from "@/features/components/PrefillSheet/PrefillSheet.tsx";
-import type { GraphNode } from "@/lib/types.ts";
+import { GraphCanvas } from "@/features/components/Graph/GraphCanvas.tsx";
+import { useGraph } from "@/features/hooks/useGraph.ts";
 
 export const Graph = () => {
-  const { data, isPending } = useBlueprintGraphQuery({
-    tenantId: "1",
-    blueprintId: "1",
-  });
+  const { graphData, isLoading, setSelectedNode } = useGraph();
 
-  const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
-
-  if (isPending) return <div>Loading...</div>;
-  if (!data) return <div>No data available</div>;
-  const onPrefillSheetClose = () => {
-    setSelectedNode(null);
-  };
-
-  console.log(data);
+  if (isLoading) return <div>Loading...</div>;
+  if (!graphData) return <div>No data available</div>;
 
   return (
     <>
       <div className="flex flex-col gap-4">
-        {data?.nodes.map((node) => {
-          return (
-            <Node
-              key={node.id}
-              title={node.data.name}
-              label="Form"
-              nodeClick={() => setSelectedNode(node)}
-            />
-          );
-        })}
+        <GraphCanvas
+          nodes={graphData.nodes}
+          setSelectedNode={setSelectedNode}
+        />
       </div>
-      <PrefillSheet
-        graph={data}
-        node={selectedNode}
-        onClose={onPrefillSheetClose}
-      />
+      <PrefillSheet />
     </>
   );
 };

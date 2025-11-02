@@ -1,4 +1,3 @@
-import type { ActionBlueprintGraphResponse, GraphNode } from "@/lib/types.ts";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -6,31 +5,21 @@ import {
   getFormForNode,
 } from "@/features/model/graph-helpers.ts";
 import { PrefillModal } from "@/features/components/PrefillModal/PrefillModal.tsx";
-import { useUpdateNodeMapping } from "@/features/hooks/mutations/useUpdateNodeMapping.ts";
+import { XIcon } from "lucide-react";
+import { useGraph } from "@/features/hooks/useGraph.ts";
 
-type PrefillSheetContentProps = {
-  graph: ActionBlueprintGraphResponse;
-  node: GraphNode;
-};
+export const PrefillSheetContent = () => {
+  const { graphData, clearNode, selectedNode: node } = useGraph();
 
-export const PrefillSheetContent = ({
-  graph,
-  node,
-}: PrefillSheetContentProps) => {
-  const form = useMemo(
-    () => getFormForNode(graph, node.data.component_id),
-    [graph, node],
-  );
+  const form = useMemo(() => {
+    if (!node) return;
+    return getFormForNode(graphData, node.data.component_id);
+  }, [graphData, node]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedField, setSelectedField] = useState<string | null>(null);
-  const { setField } = useUpdateNodeMapping("1", "1");
 
-  if (!form) return null;
+  if (!form || !node) return null;
   const formFieldsWithPrefill = getFormFieldsWithPrefill(node, form);
-
-  const clearNode = (fieldToBeRemoved: string) => {
-    setField({ selectedField: fieldToBeRemoved, nodeId: node.id });
-  };
 
   return (
     <>
@@ -45,21 +34,21 @@ export const PrefillSheetContent = ({
             }}
           >
             <div>
-              <div className="font-medium">{key}</div>
-              <div className="text-xs text-muted-foreground">
-                {/* TODO add value here */}
-              </div>
+              <span className="font-medium">{key}</span>
             </div>
             <div className="flex gap-2">
               {hasMapper ? (
                 <Button
                   variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 rounded-full"
                   onClick={(e) => {
                     e.stopPropagation();
                     clearNode(key);
                   }}
                 >
-                  Clear
+                  <XIcon className="h-4 w-4" />
+                  <span className="sr-only">Clear</span>
                 </Button>
               ) : null}
             </div>
@@ -69,8 +58,6 @@ export const PrefillSheetContent = ({
       <PrefillModal
         open={modalOpen}
         setModalOpen={setModalOpen}
-        graph={graph}
-        node={node}
         selectedField={selectedField}
       />
     </>

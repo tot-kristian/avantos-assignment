@@ -1,5 +1,4 @@
 import { Modal } from "@/components/Modal/Modal.tsx";
-import type { ActionBlueprintGraphResponse, GraphNode } from "@/lib/types.ts";
 import {
   Accordion,
   AccordionContent,
@@ -12,37 +11,35 @@ import { useEffect, useMemo, useState } from "react";
 import type { DataSourceItem } from "@/features/model/types.ts";
 import { cn } from "@/lib/utils.ts";
 import { InfoRow } from "@/features/components/InfoRow/InfoRow.tsx";
-import { useUpdateNodeMapping } from "@/features/hooks/mutations/useUpdateNodeMapping.ts";
 import { findSelectedFieldKeyAndGroup } from "@/features/model/graph-helpers.ts";
+import { useGraph } from "@/features/hooks/useGraph.ts";
 
 type PrefillModalProps = {
   open: boolean;
   setModalOpen: (open: boolean) => void;
-  graph: ActionBlueprintGraphResponse;
-  node: GraphNode;
   selectedField: string | null;
 };
 
 export const PrefillModal = ({
   open,
   setModalOpen,
-  graph,
-  node,
   selectedField,
 }: PrefillModalProps) => {
-  const dataSources = useMemo(
-    () => getAllDataSources(graph, node.id),
-    [graph, node.id],
-  );
+  const { graphData, updateNodeMapping, selectedNode: node } = useGraph();
+
+  const dataSources = useMemo(() => {
+    if (!node?.id) return {};
+    return getAllDataSources(graphData, node.id);
+  }, [graphData, node?.id]);
+
   const [selectedDataSourceItem, setSelectedDataSourceItem] =
     useState<DataSourceItem | null>(null);
 
-  const { setField } = useUpdateNodeMapping("1", "1");
   const { group, item } =
     findSelectedFieldKeyAndGroup({
       dataSources,
       selectedField,
-      inputMapping: node.data.input_mapping ?? {},
+      inputMapping: node?.data.input_mapping ?? {},
     }) || {};
 
   useEffect(() => {
@@ -50,7 +47,6 @@ export const PrefillModal = ({
     setSelectedDataSourceItem(item);
   }, [item?.id]);
 
-  console.log("Current selectedDataSourceItem state:", selectedDataSourceItem);
   const onClose = () => {
     setModalOpen(false);
     setSelectedDataSourceItem(null);
@@ -58,11 +54,7 @@ export const PrefillModal = ({
 
   const onSelect = () => {
     if (!selectedDataSourceItem || !selectedField) return;
-    setField({
-      nodeId: node.id,
-      entry: selectedDataSourceItem.entry,
-      selectedField,
-    });
+    updateNodeMapping(selectedField, selectedDataSourceItem.entry);
     setModalOpen(false);
   };
 
