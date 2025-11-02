@@ -1,12 +1,10 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button.tsx";
-import {
-  getFormFieldsWithPrefill,
-  getFormForNode,
-} from "@/features/BlueprintGraph/model/graphHelpers";
+import { getFormForNode } from "@/features/BlueprintGraph/model/graphHelpers";
 import { PrefillModal } from "@/features/BlueprintGraph/components/PrefillModal/PrefillModal.tsx";
 import { XIcon } from "lucide-react";
 import { useGraph } from "@/features/BlueprintGraph/hooks/useGraph.ts";
+import { getFormFieldsWithPrefill } from "@/features/BlueprintGraph/model/getFormFieldsWithPrefill.ts";
 
 export const PrefillSheetContent = () => {
   const { graphData, clearNode, selectedNode: node } = useGraph();

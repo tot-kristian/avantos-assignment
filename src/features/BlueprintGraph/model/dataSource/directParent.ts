@@ -1,9 +1,9 @@
 import type { DataSource } from "./types";
 import {
   getDirectParentNodes,
-  getFormFields,
   getFormForNode,
 } from "@/features/BlueprintGraph/model/graphHelpers";
+import { getFormFields } from "@/features/BlueprintGraph/model/getFormFields.ts";
 
 export const DirectParentDataSource: DataSource = {
   id: "direct-parent",

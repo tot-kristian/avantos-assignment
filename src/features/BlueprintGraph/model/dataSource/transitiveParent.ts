@@ -1,9 +1,9 @@
 import type { DataSource } from "./types";
 import {
-  getFormFields,
   getFormForNode,
   getTransitiveParentNodes,
 } from "@/features/BlueprintGraph/model/graphHelpers";
+import { getFormFields } from "@/features/BlueprintGraph/model/getFormFields.ts";
 
 export const TransitiveParentDataSource: DataSource = {
   id: "transitive-parent",
