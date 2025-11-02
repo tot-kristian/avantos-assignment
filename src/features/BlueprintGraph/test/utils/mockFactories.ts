@@ -35,6 +35,29 @@ export const createMockGraph = (
   forms,
 });
 
+export const createMockApiResponse = ({
+  tenantId = "1",
+  id = "1",
+  name = "blueprint",
+  nodes = [],
+  edges = [],
+  forms = [],
+}: {
+  tenantId?: string;
+  id?: string;
+  name?: string;
+  nodes?: GraphNode[];
+  edges?: GraphEdge[];
+  forms?: Form[];
+}): ActionBlueprintGraphResponse => {
+  return {
+    tenant_id: tenantId,
+    id,
+    name,
+    ...createMockGraph(nodes, edges, forms),
+  };
+};
+
 export const createMockForm = (
   properties: Record<string, JSONSchemaProperty>,
   id: string = "form1",
