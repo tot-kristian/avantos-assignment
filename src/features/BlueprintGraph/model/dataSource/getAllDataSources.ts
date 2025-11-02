@@ -1,7 +1,7 @@
-import { GlobalSource } from "@/features/BlueprintGraph/model/data-source/global.ts";
-import { DirectParentDataSource } from "@/features/BlueprintGraph/model/data-source/direct-parent.ts";
-import { TransitiveParentDataSource } from "@/features/BlueprintGraph/model/data-source/transitive-parent.ts";
-import type { DataSourceMap } from "@/features/BlueprintGraph/model/types.ts";
+import { GlobalSource } from "@/features/BlueprintGraph/model/dataSource/global.ts";
+import { DirectParentDataSource } from "@/features/BlueprintGraph/model/dataSource/directParent.ts";
+import { TransitiveParentDataSource } from "@/features/BlueprintGraph/model/dataSource/transitiveParent.ts";
+import type { DataSourceMap } from "./types";
 import type { ActionBlueprintGraphResponse } from "@/features/BlueprintGraph/api/types";
 
 const dataSources = [

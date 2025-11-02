@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion.tsx";
-import type { DataSourceItem } from "@/features/BlueprintGraph/model/types.ts";
+import type { DataSourceItem } from "@/features/BlueprintGraph/model/dataSource/types";
 import { cn } from "@/lib/utils.ts";
 
 type DataSourceListProps = {

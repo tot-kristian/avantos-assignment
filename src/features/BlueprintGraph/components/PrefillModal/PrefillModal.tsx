@@ -1,12 +1,12 @@
 import { Modal } from "@/components/Modal/Modal.tsx";
-import { getAllDataSources } from "@/features/BlueprintGraph/model/data-source/get-all-data-sources.ts";
+import { getAllDataSources } from "@/features/BlueprintGraph/model/dataSource/getAllDataSources.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { useEffect, useMemo, useState } from "react";
 import type {
   DataSourceItem,
   DataSourceItemWithGroup,
-} from "@/features/BlueprintGraph/model/types.ts";
-import { findSelectedDataSourceItemAndGroup } from "@/features/BlueprintGraph/model/graph-helpers.ts";
+} from "@/features/BlueprintGraph/model/dataSource/types";
+import { findSelectedDataSourceItemAndGroup } from "@/features/BlueprintGraph/model/graphHelpers";
 import { useGraph } from "@/features/BlueprintGraph/hooks/useGraph.ts";
 import { DataSourceItemDetails } from "@/features/BlueprintGraph/components/PrefillModal/DataSourceDetails/DataSourceDetails.tsx";
 import { DataSourceList } from "@/features/BlueprintGraph/components/PrefillModal/DataSourceList/DataSourceList.tsx";

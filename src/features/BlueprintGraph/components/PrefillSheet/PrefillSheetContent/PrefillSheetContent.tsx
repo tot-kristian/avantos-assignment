@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button.tsx";
 import {
   getFormFieldsWithPrefill,
   getFormForNode,
-} from "@/features/BlueprintGraph/model/graph-helpers.ts";
+} from "@/features/BlueprintGraph/model/graphHelpers";
 import { PrefillModal } from "@/features/BlueprintGraph/components/PrefillModal/PrefillModal.tsx";
 import { XIcon } from "lucide-react";
 import { useGraph } from "@/features/BlueprintGraph/hooks/useGraph.ts";

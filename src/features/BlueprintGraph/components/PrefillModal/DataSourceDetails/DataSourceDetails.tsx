@@ -1,4 +1,4 @@
-import type { DataSourceItem } from "@/features/BlueprintGraph/model/types.ts";
+import type { DataSourceItem } from "@/features/BlueprintGraph/model/dataSource/types";
 import { InfoRow } from "@/features/BlueprintGraph/components/InfoRow/InfoRow.tsx";
 
 type DataSourceItemDetailsProps = {

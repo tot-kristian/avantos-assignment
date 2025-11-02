@@ -1,4 +1,4 @@
-import type { DataSource } from "@/features/BlueprintGraph/model/types.ts";
+import type { DataSource } from "./types";
 
 export const GlobalSource: DataSource = {
   id: "global",
