@@ -2,8 +2,11 @@ import { Modal } from "@/components/Modal/Modal.tsx";
 import { getAllDataSources } from "@/features/data-source/get-all-data-sources.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { useEffect, useMemo, useState } from "react";
-import type { DataSourceItem } from "@/features/model/types.ts";
-import { findSelectedFieldKeyAndGroup } from "@/features/model/graph-helpers.ts";
+import type {
+  DataSourceItem,
+  DataSourceItemWithGroup,
+} from "@/features/model/types.ts";
+import { findSelectedDataSourceItemAndGroup } from "@/features/model/graph-helpers.ts";
 import { useGraph } from "@/features/hooks/useGraph.ts";
 import { DataSourceItemDetails } from "@/features/components/PrefillModal/DataSourceDetails/DataSourceDetails.tsx";
 import { DataSourceList } from "@/features/components/PrefillModal/DataSourceList/DataSourceList.tsx";
@@ -29,12 +32,15 @@ export const PrefillModal = ({
   const [selectedDataSourceItem, setSelectedDataSourceItem] =
     useState<DataSourceItem | null>(null);
 
-  const { group, item } =
-    findSelectedFieldKeyAndGroup({
-      dataSources,
-      selectedField,
-      inputMapping: node?.data.input_mapping ?? {},
-    }) || {};
+  const { group, item } = useMemo(
+    () =>
+      findSelectedDataSourceItemAndGroup({
+        dataSources,
+        selectedField,
+        inputMapping: node?.data.input_mapping ?? {},
+      }) || ({} as Partial<DataSourceItemWithGroup>),
+    [dataSources, selectedField, node],
+  );
 
   useEffect(() => {
     if (open) {

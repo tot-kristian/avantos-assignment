@@ -6,7 +6,7 @@ import type {
 } from "@/lib/types.ts";
 import type {
   ApiMappingEntry,
-  DataSourceItem,
+  DataSourceItemWithGroup,
   DataSourceMap,
   FieldFormat,
   FieldKind,
@@ -104,7 +104,7 @@ export const getTransitiveParentNodes = (
   return allParents.filter((node) => !directParents.has(node.id));
 };
 
-export const findSelectedFieldKeyAndGroup = ({
+export const findSelectedDataSourceItemAndGroup = ({
   inputMapping,
   selectedField,
   dataSources,
@@ -112,7 +112,7 @@ export const findSelectedFieldKeyAndGroup = ({
   inputMapping: Record<string, ApiMappingEntry>;
   selectedField?: string | null;
   dataSources: DataSourceMap;
-}): { group: string; item: DataSourceItem } | undefined => {
+}): DataSourceItemWithGroup | undefined => {
   if (!selectedField || !Object.keys(inputMapping).length) return;
   const currentMapping = inputMapping[selectedField];
 

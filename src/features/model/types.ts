@@ -40,3 +40,5 @@ export type DataSource = {
 };
 
 export type DataSourceMap = Record<string, DataSourceItem[]>;
+
+export type DataSourceItemWithGroup = { group: string; item: DataSourceItem };
