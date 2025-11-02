@@ -1,3 +1,5 @@
+import type { FieldFormat } from "@/features/BlueprintGraph/model/dataSource/types";
+
 type AvantosType =
   | "button"
   | "checkbox-group"
@@ -12,7 +14,7 @@ export type JSONSchemaProperty = {
   avantos_type: AvantosType;
   title?: string;
   type: JSONSchemaType;
-  format?: string;
+  format?: FieldFormat;
   enum?: unknown[] | null;
   items?: {
     enum?: string[];

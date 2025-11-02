@@ -1,21 +1,12 @@
 import type { GraphNode } from "./graphNode.ts";
 import type { Form } from "./form.ts";
-
-type GraphEdge = {
-  source: string;
-  target: string;
-};
+import type { GraphEdge } from "@/features/BlueprintGraph/api/types/graphEdge.ts";
 
 export type ActionBlueprintGraphResponse = {
-  $schema: string;
   id: string;
   tenant_id: string;
   name: string;
-  description: string;
-  category: string;
   nodes: GraphNode[];
   edges: GraphEdge[];
   forms: Form[];
-  branches: unknown[];
-  triggers: unknown[];
 };
