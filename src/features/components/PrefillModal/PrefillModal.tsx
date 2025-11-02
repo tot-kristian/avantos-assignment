@@ -70,7 +70,6 @@ export const PrefillModal = ({
       <div className="flex flex-row justify-between">
         <div>
           <span className="font-semibold">Available data</span>
-          {/*TODO add search support*/}
           <Accordion
             type="multiple"
             className="w-full"
