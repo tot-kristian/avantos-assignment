@@ -1,8 +1,8 @@
 import { GlobalSource } from "@/features/data-source/global.ts";
 import { DirectParentDataSource } from "@/features/data-source/direct-parent.ts";
 import { TransitiveParentDataSource } from "@/features/data-source/transitive-parent.ts";
-import type { DataSourceItem } from "@/features/model/types.ts";
-import type { ActionBlueprintGraphResponse, GraphNode } from "@/lib/types.ts";
+import type { DataSourceMap } from "@/features/model/types.ts";
+import type { ActionBlueprintGraphResponse } from "@/lib/types.ts";
 
 const dataSources = [
   GlobalSource,
@@ -12,11 +12,11 @@ const dataSources = [
 
 export const getAllDataSources = (
   graph: ActionBlueprintGraphResponse,
-  node: GraphNode,
-): Record<string, DataSourceItem[]> => {
+  nodeId: string,
+): DataSourceMap => {
   return dataSources
-    .flatMap((ds) => ds.listFor({ graph, targetNodeId: node.id }))
-    .reduce<Record<string, DataSourceItem[]>>((acc, curr) => {
+    .flatMap((ds) => ds.listFor({ graph, targetNodeId: nodeId }))
+    .reduce<DataSourceMap>((acc, curr) => {
       if (acc[curr.group]) {
         acc[curr.group].push(curr);
       } else {

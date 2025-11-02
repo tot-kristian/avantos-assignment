@@ -5,7 +5,7 @@ import {
 } from "@/features/api/getBlueprintsGraphData.ts";
 
 type FunctionData = Awaited<ReturnType<typeof getBlueprintsGraphData>>;
-const getFetchFormKeys = (params: FetchFormsParams) => [
+export const getFetchBlueprintGraphKeys = (params: FetchFormsParams) => [
   "blueprint-graph",
   params.tenantId,
   params.blueprintId,
@@ -21,7 +21,7 @@ export const useBlueprintGraphQuery = <TData = FunctionData>(
   return useQuery({
     staleTime: Infinity,
     ...options,
-    queryKey: getFetchFormKeys(apiParams),
+    queryKey: getFetchBlueprintGraphKeys(apiParams),
     queryFn: () => getBlueprintsGraphData(apiParams),
   });
 };

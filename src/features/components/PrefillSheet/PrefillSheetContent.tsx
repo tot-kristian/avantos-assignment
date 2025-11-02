@@ -6,20 +6,32 @@ import {
   getFormForNode,
 } from "@/features/model/graph-helpers.ts";
 import { PrefillModal } from "@/features/components/PrefillModal/PrefillModal.tsx";
+import { useUpdateNodeMapping } from "@/features/hooks/mutations/useUpdateNodeMapping.ts";
 
-type Props = {
+type PrefillSheetContentProps = {
   graph: ActionBlueprintGraphResponse;
   node: GraphNode;
 };
-export const PrefillSheetContent = ({ graph, node }: Props) => {
+
+export const PrefillSheetContent = ({
+  graph,
+  node,
+}: PrefillSheetContentProps) => {
   const form = useMemo(
     () => getFormForNode(graph, node.data.component_id),
     [graph, node],
   );
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  if (!form) return null;
+  const [selectedField, setSelectedField] = useState<string | null>(null);
+  const { setField } = useUpdateNodeMapping("1", "1");
 
+  if (!form) return null;
   const formFieldsWithPrefill = getFormFieldsWithPrefill(node, form);
+
+  const clearNode = (fieldToBeRemoved: string) => {
+    setField({ selectedField: fieldToBeRemoved, nodeId: node.id });
+  };
+
   return (
     <>
       {formFieldsWithPrefill.map(({ key, hasMapper }) => {
@@ -27,7 +39,10 @@ export const PrefillSheetContent = ({ graph, node }: Props) => {
           <div
             key={key}
             className="flex items-center justify-between border rounded p-2"
-            onClick={() => setModalOpen(true)}
+            onClick={() => {
+              setSelectedField(key);
+              setModalOpen(true);
+            }}
           >
             <div>
               <div className="font-medium">{key}</div>
@@ -36,7 +51,17 @@ export const PrefillSheetContent = ({ graph, node }: Props) => {
               </div>
             </div>
             <div className="flex gap-2">
-              {hasMapper ? <Button variant="ghost">Clear</Button> : null}
+              {hasMapper ? (
+                <Button
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    clearNode(key);
+                  }}
+                >
+                  Clear
+                </Button>
+              ) : null}
             </div>
           </div>
         );
@@ -46,6 +71,7 @@ export const PrefillSheetContent = ({ graph, node }: Props) => {
         setModalOpen={setModalOpen}
         graph={graph}
         node={node}
+        selectedField={selectedField}
       />
     </>
   );

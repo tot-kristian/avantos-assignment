@@ -8,28 +8,63 @@ import {
 } from "@/components/ui/accordion";
 import { getAllDataSources } from "@/features/data-source/get-all-data-sources.ts";
 import { Button } from "@/components/ui/button.tsx";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { DataSourceItem } from "@/features/model/types.ts";
 import { cn } from "@/lib/utils.ts";
 import { InfoRow } from "@/features/components/InfoRow/InfoRow.tsx";
+import { useUpdateNodeMapping } from "@/features/hooks/mutations/useUpdateNodeMapping.ts";
+import { findSelectedFieldKeyAndGroup } from "@/features/model/graph-helpers.ts";
 
-type Props = {
+type PrefillModalProps = {
   open: boolean;
   setModalOpen: (open: boolean) => void;
   graph: ActionBlueprintGraphResponse;
   node: GraphNode;
+  selectedField: string | null;
 };
 
-export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
-  const globalDataSource = getAllDataSources(graph, node);
-  const [selected, setSelected] = useState<DataSourceItem | null>(null);
+export const PrefillModal = ({
+  open,
+  setModalOpen,
+  graph,
+  node,
+  selectedField,
+}: PrefillModalProps) => {
+  const dataSources = useMemo(
+    () => getAllDataSources(graph, node.id),
+    [graph, node.id],
+  );
+  const [selectedDataSourceItem, setSelectedDataSourceItem] =
+    useState<DataSourceItem | null>(null);
 
+  const { setField } = useUpdateNodeMapping("1", "1");
+  const { group, item } =
+    findSelectedFieldKeyAndGroup({
+      dataSources,
+      selectedField,
+      inputMapping: node.data.input_mapping ?? {},
+    }) || {};
+
+  useEffect(() => {
+    if (!item) return;
+    setSelectedDataSourceItem(item);
+  }, [item?.id]);
+
+  console.log("Current selectedDataSourceItem state:", selectedDataSourceItem);
   const onClose = () => {
     setModalOpen(false);
-    setSelected(null);
+    setSelectedDataSourceItem(null);
   };
 
-  const onSelect = () => {};
+  const onSelect = () => {
+    if (!selectedDataSourceItem || !selectedField) return;
+    setField({
+      nodeId: node.id,
+      entry: selectedDataSourceItem.entry,
+      selectedField,
+    });
+    setModalOpen(false);
+  };
 
   return (
     <Modal
@@ -42,8 +77,12 @@ export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
         <div>
           <span className="font-semibold">Available data</span>
           {/*TODO add search support*/}
-          <Accordion type="multiple" className="w-full">
-            {Object.entries(globalDataSource).map(([group, items]) => {
+          <Accordion
+            type="multiple"
+            className="w-full"
+            defaultValue={group ? [group] : []}
+          >
+            {Object.entries(dataSources).map(([group, items]) => {
               return (
                 <AccordionItem value={group} key={group} className="bg-accent">
                   <AccordionTrigger>{group}</AccordionTrigger>
@@ -53,9 +92,10 @@ export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
                         key={item.id}
                         className={cn(
                           "text-sm",
-                          selected?.id === item.id && "bg-red-500",
+                          selectedDataSourceItem?.id === item.id &&
+                            "bg-red-500",
                         )}
-                        onClick={() => setSelected(item)}
+                        onClick={() => setSelectedDataSourceItem(item)}
                       >
                         {item.label}
                       </div>
@@ -68,36 +108,36 @@ export const PrefillModal = ({ open, setModalOpen, graph, node }: Props) => {
         </div>
         <div className="flex flex-col">
           <div className="flex-1 p-4">
-            {!selected ? (
+            {!selectedDataSourceItem ? (
               <div className="h-full flex items-center justify-center text-sm text-muted-foreground">
                 Select an item on the left.
               </div>
             ) : (
               <div className="space-y-3">
                 <div className="text-base font-semibold">
-                  {`${selected.group} - ${selected.label}`}
+                  {`${selectedDataSourceItem.group} - ${selectedDataSourceItem.label}`}
                 </div>
                 <div className="rounded-md border p-3 text-sm">
-                  <InfoRow label="Group" value={selected.group} />
-                  <InfoRow label="Field" value={selected.label} />
+                  <InfoRow label="Group" value={selectedDataSourceItem.group} />
+                  <InfoRow label="Field" value={selectedDataSourceItem.label} />
                   <InfoRow
                     label="Type"
                     value={
-                      selected.valueType === "string"
-                        ? selected.format
-                          ? `string/${selected.format}`
+                      selectedDataSourceItem.valueType === "string"
+                        ? selectedDataSourceItem.format
+                          ? `string/${selectedDataSourceItem.format}`
                           : "string"
-                        : selected.valueType
+                        : selectedDataSourceItem.valueType
                     }
                   />
                   <InfoRow
                     label="Component key"
-                    value={selected.entry.component_key}
+                    value={selectedDataSourceItem.entry.component_key}
                     fontMono
                   />
                   <InfoRow
                     label="Output key"
-                    value={selected.entry.output_key}
+                    value={selectedDataSourceItem.entry.output_key}
                     fontMono
                   />
                 </div>

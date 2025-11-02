@@ -1,3 +1,5 @@
+import type { ApiMappingEntry } from "@/features/model/types.ts";
+
 type Position = {
   x: number;
   y: number;
@@ -16,7 +18,7 @@ type NodeData = {
   name: string;
   prerequisites: string[];
   permitted_roles: string[];
-  input_mapping: Record<string, unknown>;
+  input_mapping: Record<string, ApiMappingEntry>;
   sla_duration: SLADuration;
   approval_required: boolean;
   approval_roles: string[];

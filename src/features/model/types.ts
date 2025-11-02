@@ -29,7 +29,7 @@ export type DataSourceItem = {
   entry: ApiMappingEntry;
 };
 
-export interface DataSource {
+export type DataSource = {
   id: string;
   label: string;
   listFor(args: {
@@ -37,4 +37,6 @@ export interface DataSource {
     targetNodeId: string;
     targetField?: TargetField;
   }): DataSourceItem[];
-}
+};
+
+export type DataSourceMap = Record<string, DataSourceItem[]>;

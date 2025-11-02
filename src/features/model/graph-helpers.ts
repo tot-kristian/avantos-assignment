@@ -5,6 +5,9 @@ import type {
   JSONSchemaProperty,
 } from "@/lib/types.ts";
 import type {
+  ApiMappingEntry,
+  DataSourceItem,
+  DataSourceMap,
   FieldFormat,
   FieldKind,
   TargetField,
@@ -99,4 +102,29 @@ export const getTransitiveParentNodes = (
   const allParents = getAllParentNodesDFS(graph, nodeId);
 
   return allParents.filter((node) => !directParents.has(node.id));
+};
+
+export const findSelectedFieldKeyAndGroup = ({
+  inputMapping,
+  selectedField,
+  dataSources,
+}: {
+  inputMapping: Record<string, ApiMappingEntry>;
+  selectedField?: string | null;
+  dataSources: DataSourceMap;
+}): { group: string; item: DataSourceItem } | undefined => {
+  if (!selectedField || !Object.keys(inputMapping).length) return;
+  const currentMapping = inputMapping[selectedField];
+
+  if (!currentMapping) return;
+  const { component_key } = currentMapping;
+
+  for (const [group, items] of Object.entries(dataSources)) {
+    const item = items.find(
+      (item) => item.entry.component_key === component_key,
+    );
+    if (item) {
+      return { group, item };
+    }
+  }
 };
