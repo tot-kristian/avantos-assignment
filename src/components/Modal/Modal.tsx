@@ -27,7 +27,7 @@ export const Modal = ({
     size === "wide"
       ? "max-w-full"
       : size === "fullscreen"
-        ? "w-[95vw] h-[95vh] max-w-none"
+        ? "min-w-auto min-h-[50vh] max-h-[95vh] max-w-none"
         : "sm:max-w-lg";
 
   return (

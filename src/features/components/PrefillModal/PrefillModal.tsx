@@ -1,18 +1,12 @@
 import { Modal } from "@/components/Modal/Modal.tsx";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { getAllDataSources } from "@/features/data-source/get-all-data-sources.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { useEffect, useMemo, useState } from "react";
 import type { DataSourceItem } from "@/features/model/types.ts";
-import { cn } from "@/lib/utils.ts";
-import { InfoRow } from "@/features/components/InfoRow/InfoRow.tsx";
 import { findSelectedFieldKeyAndGroup } from "@/features/model/graph-helpers.ts";
 import { useGraph } from "@/features/hooks/useGraph.ts";
+import { DataSourceItemDetails } from "@/features/components/PrefillModal/DataSourceDetails/DataSourceDetails.tsx";
+import { DataSourceList } from "@/features/components/PrefillModal/DataSourceList/DataSourceList.tsx";
 
 type PrefillModalProps = {
   open: boolean;
@@ -59,83 +53,30 @@ export const PrefillModal = ({
     setModalOpen(false);
   };
 
+  const hasSelection = !!selectedDataSourceItem;
+
   return (
     <Modal
       open={open}
       onOpenChange={setModalOpen}
       title="Select data element to map"
       description="Select elements from the lists below"
-      size="wide"
+      size="fullscreen"
     >
       <div className="flex flex-row justify-between">
         <div>
           <span className="font-semibold">Available data</span>
-          <Accordion
-            type="multiple"
-            className="w-full"
-            defaultValue={group ? [group] : []}
-          >
-            {Object.entries(dataSources).map(([group, items]) => {
-              return (
-                <AccordionItem value={group} key={group} className="bg-accent">
-                  <AccordionTrigger>{group}</AccordionTrigger>
-                  <AccordionContent className="space-y-2 pl-4">
-                    {items.map((item) => (
-                      <div
-                        key={item.id}
-                        className={cn(
-                          "text-sm",
-                          selectedDataSourceItem?.id === item.id &&
-                            "bg-red-500",
-                        )}
-                        onClick={() => setSelectedDataSourceItem(item)}
-                      >
-                        {item.label}
-                      </div>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
+          <DataSourceList
+            dataSources={dataSources}
+            selectedItem={selectedDataSourceItem}
+            onSelectItem={setSelectedDataSourceItem}
+            defaultExpandedGroup={group}
+          />
         </div>
         <div className="flex flex-col">
-          <div className="flex-1 p-4">
-            {!selectedDataSourceItem ? (
-              <div className="h-full flex items-center justify-center text-sm text-muted-foreground">
-                Select an item on the left.
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <div className="text-base font-semibold">
-                  {`${selectedDataSourceItem.group} - ${selectedDataSourceItem.label}`}
-                </div>
-                <div className="rounded-md border p-3 text-sm">
-                  <InfoRow label="Group" value={selectedDataSourceItem.group} />
-                  <InfoRow label="Field" value={selectedDataSourceItem.label} />
-                  <InfoRow
-                    label="Type"
-                    value={
-                      selectedDataSourceItem.valueType === "string"
-                        ? selectedDataSourceItem.format
-                          ? `string/${selectedDataSourceItem.format}`
-                          : "string"
-                        : selectedDataSourceItem.valueType
-                    }
-                  />
-                  <InfoRow
-                    label="Component key"
-                    value={selectedDataSourceItem.entry.component_key}
-                    fontMono
-                  />
-                  <InfoRow
-                    label="Output key"
-                    value={selectedDataSourceItem.entry.output_key}
-                    fontMono
-                  />
-                </div>
-              </div>
-            )}
+          <span className="font-semibold mb-3 text-sm">Details</span>
+          <div className="flex-1 border rounded-md bg-muted/30 p-4">
+            <DataSourceItemDetails item={selectedDataSourceItem} />
           </div>
         </div>
       </div>
@@ -145,7 +86,8 @@ export const PrefillModal = ({
         </Button>
         <Button
           variant="outline"
-          disabled={!selectedDataSourceItem}
+          disabled={!hasSelection}
+          className={!hasSelection ? "opacity-50 cursor-not-allowed" : ""}
           onClick={() => onSelect()}
         >
           Select
