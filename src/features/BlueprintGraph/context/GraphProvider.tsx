@@ -22,7 +22,6 @@ export const GraphProvider = ({
     tenantId,
     blueprintId,
   });
-  console.log(data);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const { updateNode } = useUpdateNodeMapping({ tenantId, blueprintId });
 

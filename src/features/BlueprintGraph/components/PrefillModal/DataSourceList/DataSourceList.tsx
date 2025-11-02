@@ -35,8 +35,9 @@ export const DataSourceList = ({
               <div
                 key={item.id}
                 className={cn(
-                  "text-sm text-left w-full p-2 rounded transition-colors hover:bg-accent",
-                  selectedItem?.id === item.id && "border border-gray-300",
+                  "text-sm text-left w-full p-2 rounded transition-colors cursor-pointer",
+                  selectedItem?.id === item.id &&
+                    "border border-gray-300 bg-background",
                 )}
                 onClick={() => onSelectItem(item)}
               >
