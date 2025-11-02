@@ -5,7 +5,7 @@ import type {
   ApiMappingEntry,
   GraphNode,
 } from "@/features/BlueprintGraph/api/types";
-import { useUpdateNodeMapping } from "@/features/BlueprintGraph/hooks/api/mutations/useUpdateNodeMapping.ts";
+import { useUpdateNodeInputMapping } from "@/features/BlueprintGraph/hooks/api/mutations/useUpdateNodeInputMapping.ts";
 
 interface GraphProviderProps {
   tenantId: string;
@@ -23,7 +23,7 @@ export const GraphProvider = ({
     blueprintId,
   });
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
-  const { updateNode } = useUpdateNodeMapping({ tenantId, blueprintId });
+  const { updateNode } = useUpdateNodeInputMapping({ tenantId, blueprintId });
 
   useEffect(() => {
     if (!data || !selectedNode) return;

@@ -4,8 +4,9 @@ import type {
   ActionBlueprintGraphResponse,
   ApiMappingEntry,
 } from "@/features/BlueprintGraph/api/types";
+import { updateNodeInputMapping } from "@/features/BlueprintGraph/model/updateNodeInputMapping.ts";
 
-export const useUpdateNodeMapping = (params: {
+export const useUpdateNodeInputMapping = (params: {
   tenantId: string;
   blueprintId: string;
 }) => {
@@ -20,17 +21,14 @@ export const useUpdateNodeMapping = (params: {
     selectedField: string;
     entry?: ApiMappingEntry | null;
   }) => {
-    qc.setQueryData(key, (prev: ActionBlueprintGraphResponse) => {
-      if (!prev) return prev;
-      const next = structuredClone(prev);
-      const node = next.nodes.find((n) => n.id === nodeId);
-      if (!node) return prev;
-
-      node.data.input_mapping ??= {};
-      if (!entry) delete node.data.input_mapping[selectedField];
-      else node.data.input_mapping[selectedField] = entry;
-
-      return next;
+    qc.setQueryData(key, (prevGraph: ActionBlueprintGraphResponse) => {
+      if (!prevGraph) return prevGraph;
+      return updateNodeInputMapping({
+        graphData: prevGraph,
+        nodeId,
+        selectedField,
+        entry,
+      });
     });
   };
 
