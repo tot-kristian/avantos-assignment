@@ -121,9 +121,7 @@ export const findSelectedFieldKeyAndGroup = ({
   for (const [group, items] of Object.entries(dataSources)) {
     const item = items.find(
       (item) =>
-        item.entry.component_key === component_key &&
-        item.entry.type === "form_field" &&
-        item.label === output_key,
+        item.entry.component_key === component_key && item.label === output_key,
     );
     if (item) {
       return { group, item };
