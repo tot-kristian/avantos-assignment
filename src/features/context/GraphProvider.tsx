@@ -22,7 +22,7 @@ export const GraphProvider = ({
   });
   console.log(data);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
-  const { setField } = useUpdateNodeMapping({ tenantId, blueprintId });
+  const { updateNode } = useUpdateNodeMapping({ tenantId, blueprintId });
 
   useEffect(() => {
     if (!data || !selectedNode) return;
@@ -35,13 +35,13 @@ export const GraphProvider = ({
   const clearNode = (fieldToBeRemoved: string) => {
     if (!selectedNode) return;
 
-    setField({ nodeId: selectedNode.id, selectedField: fieldToBeRemoved });
+    updateNode({ nodeId: selectedNode.id, selectedField: fieldToBeRemoved });
   };
 
   const updateNodeMapping = (field: string, entry: ApiMappingEntry) => {
     if (!selectedNode) return;
 
-    setField({ nodeId: selectedNode?.id, selectedField: field, entry });
+    updateNode({ nodeId: selectedNode?.id, selectedField: field, entry });
   };
 
   return (

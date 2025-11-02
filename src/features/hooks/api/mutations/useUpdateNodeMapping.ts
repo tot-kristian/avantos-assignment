@@ -9,7 +9,7 @@ export const useUpdateNodeMapping = (params: {
 }) => {
   const qc = useQueryClient();
 
-  const setField = ({
+  const updateNode = ({
     nodeId,
     selectedField,
     entry,
@@ -34,5 +34,5 @@ export const useUpdateNodeMapping = (params: {
 
   const key = getFetchBlueprintGraphKeys(params);
 
-  return { setField };
+  return { updateNode };
 };

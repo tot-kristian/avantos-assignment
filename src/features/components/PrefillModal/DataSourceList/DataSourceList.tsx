@@ -21,7 +21,6 @@ export const DataSourceList = ({
   onSelectItem,
   defaultExpandedGroup,
 }: DataSourceListProps) => {
-  console.log(">>> ", selectedItem);
   return (
     <Accordion
       type="multiple"
