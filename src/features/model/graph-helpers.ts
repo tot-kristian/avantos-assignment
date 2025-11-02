@@ -117,11 +117,13 @@ export const findSelectedFieldKeyAndGroup = ({
   const currentMapping = inputMapping[selectedField];
 
   if (!currentMapping) return;
-  const { component_key } = currentMapping;
-
+  const { component_key, output_key } = currentMapping;
   for (const [group, items] of Object.entries(dataSources)) {
     const item = items.find(
-      (item) => item.entry.component_key === component_key,
+      (item) =>
+        item.entry.component_key === component_key &&
+        item.entry.type === "form_field" &&
+        item.label === output_key,
     );
     if (item) {
       return { group, item };

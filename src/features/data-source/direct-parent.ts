@@ -31,7 +31,7 @@ export const DirectParentDataSource: DataSource = {
           valueType: f.valueType,
           entry: {
             type: "form_field",
-            component_key: node.id,
+            component_key: node.data.component_key,
             output_key: f.name,
             is_metadata: false,
           },

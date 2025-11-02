@@ -43,9 +43,10 @@ export const PrefillModal = ({
     }) || {};
 
   useEffect(() => {
-    if (!item) return;
-    setSelectedDataSourceItem(item);
-  }, [item?.id]);
+    if (open) {
+      setSelectedDataSourceItem(item ?? null);
+    }
+  }, [open, selectedField, item]);
 
   const onClose = () => {
     setModalOpen(false);
@@ -63,6 +64,7 @@ export const PrefillModal = ({
       open={open}
       onOpenChange={setModalOpen}
       title="Select data element to map"
+      description="Select elements from the lists below"
       size="wide"
     >
       <div className="flex flex-row justify-between">
@@ -142,7 +144,11 @@ export const PrefillModal = ({
         <Button variant="outline" onClick={() => onClose()}>
           Cancel
         </Button>
-        <Button variant="outline" onClick={() => onSelect()}>
+        <Button
+          variant="outline"
+          disabled={!selectedDataSourceItem}
+          onClick={() => onSelect()}
+        >
           Select
         </Button>
       </div>
