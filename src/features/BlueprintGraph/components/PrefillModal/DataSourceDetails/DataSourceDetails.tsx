@@ -8,7 +8,10 @@ type DataSourceItemDetailsProps = {
 export const DataSourceItemDetails = ({ item }: DataSourceItemDetailsProps) => {
   if (!item) {
     return (
-      <div className="h-full flex items-center justify-center text-sm text-muted-foreground border rounded-md p-8">
+      <div
+        className="h-full flex items-center justify-center text-sm text-muted-foreground border rounded-md p-8"
+        data-testid="data-source-details-empty"
+      >
         Select an item on the left
       </div>
     );
@@ -23,11 +26,22 @@ export const DataSourceItemDetails = ({ item }: DataSourceItemDetailsProps) => {
 
   return (
     <div className="space-y-3">
-      <span className="font-semibold block">Details</span>
-      <div className="text-base font-semibold">
+      <span
+        className="font-semibold block"
+        data-testid="data-source-details-details"
+      >
+        Details
+      </span>
+      <div
+        className="text-base font-semibold"
+        data-testid="data-source-group-label"
+      >
         {item.group} - {item.label}
       </div>
-      <div className="rounded-md border p-3 text-sm space-y-1">
+      <div
+        className="rounded-md border p-3 text-sm space-y-1"
+        data-test-id="data-source-details-rows"
+      >
         <InfoRow label="Group" value={item.group} />
         <InfoRow label="Field" value={item.label} />
         <InfoRow label="Type" value={typeValue} />
