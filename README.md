@@ -70,45 +70,28 @@ src/
 
 ### Feature-Based Organization
 
-The project follows a **feature-based architecture** where each feature is self-contained with its own:
-- **API layer** - Type definitions and API client functions
-- **Components** - UI components specific to the feature
-- **Context** - State management via React Context
-- **Hooks** - React Query hooks for data fetching and mutations
-- **Model** - Domain models and business logic
-- **Tests** - Feature-specific test utilities and mocks
-
-This structure ensures:
-- ✅ Clear separation of concerns
-- ✅ Easy feature discovery and maintenance
-- ✅ Minimal coupling between features
-- ✅ Scalability as the application grows
+The project uses **feature-based architecture** - each feature is self-contained with:
+- `api/` - API types and functions
+- `components/` - UI components
+- `context/` - State management
+- `hooks/` - React Query hooks
+- `model/` - Business logic
+- `test/` - Test utilities and smoke tests
 
 ### Key Patterns
 
-**Context Provider Pattern**
-- `GraphProvider` manages global graph state
-- Provides graph data, selected node, and update functions to child components
-
-**Custom Hooks**
-- API hooks (`useBlueprintGraphQuery`) for data fetching
-- Mutation hooks (`useUpdateNodeInputMapping`) for data updates
-- React Query for caching and state management
-
-**Pure Functions**
-- Business logic extracted into testable utility functions
-- Example: `updateNodeInputMapping`
+- **Context Provider** - `GraphProvider` manages graph state globally
+- **React Query** - Server state management with caching
+- **Pure Functions** - Business logic (e.g., `updateNodeInputMapping`) extracted for testability
 
 ## Adding a New Data Source
-
-### Adding a New Data Source
 
 1. Define the data source type in `src/features/BlueprintGraph/model/data-source`
 2. Adjust the dataSource interface if needed (e.g., if you want different args to the function than a graph) `src/features/BlueprintGraph/models/data-source/types/dataSource.ts`
 3. If you need to fetch data from the api create the necessary hooks for it `src/features/BlueprintGraph/hooks`
-5. Add the data source to the `src/features/BlueprintGraph/model/data-source/dataSources.ts` file
-4. Add any business logic to `src/features/BlueprintGraph/models/`
-5. Write tests for new utilities and components
+4. Add the data source to the `src/features/BlueprintGraph/model/data-source/dataSources.ts` file
+5. Add any business logic to `src/features/BlueprintGraph/models/`
+6. Write tests for new utilities and components
 
 ## Testing
 
