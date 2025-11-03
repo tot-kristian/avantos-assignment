@@ -5,6 +5,24 @@ A React application for managing and configuring blueprint graphs with data sour
 ## Prerequisites
 
 - Yarn package manager
+- Mock API server (see setup below)
+- 
+## Mock API Setup
+
+This project requires a mock API server to run. Clone and start the mock API:
+```bash
+# Clone the mock API repository
+git clone https://github.com/mosaic-avantos/frontendchallengeserver.git
+cd frontendchallengeserver
+
+# Install and start
+npm install
+npm start
+```
+
+The mock API will run on `http://localhost:3000` by default.
+
+**Note:** Make sure the mock API is running before starting the React application.
 
 ## Getting Started
 
@@ -117,3 +135,14 @@ yarn test:run          # Run once (CI mode)
 **Smoke Tests**
 - Complete user workflow: graph navigation → node selection → mapping → save
 - Ensures core features work end-to-end
+
+## Known Limitations
+
+**Error Handling**
+- API error handling is minimal in the current implementation
+- In a production environment, I would add:
+    - Proper error boundaries for component-level errors
+    - Toast notifications for user feedback
+    - Retry logic for failed requests
+    - Loading states with error messages
+    - Proper 404 page
