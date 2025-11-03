@@ -87,10 +87,10 @@ The project uses **feature-based architecture** - each feature is self-contained
 ## Adding a New Data Source
 
 1. Define the data source type in `src/features/BlueprintGraph/model/data-source`
-2. Adjust the dataSource interface if needed (e.g., if you want different args to the function than a graph) `src/features/BlueprintGraph/models/data-source/types/dataSource.ts`
+2. Adjust the dataSource interface if needed (e.g., if you want different args to the listFor function than a graph) `src/features/BlueprintGraph/models/data-source/types/dataSource.ts`
 3. If you need to fetch data from the api create the necessary hooks for it `src/features/BlueprintGraph/hooks`
-4. Add the data source to the `src/features/BlueprintGraph/model/data-source/dataSources.ts` file
-5. Add any business logic to `src/features/BlueprintGraph/models/`
+4. Add the data source to the `src/features/BlueprintGraph/model/data-source/getAllDataSources.ts` file and adjust the input for listFor
+5. Add any business logic to `src/features/BlueprintGraph/models`
 6. Write tests for new utilities and components
 
 ## Testing
