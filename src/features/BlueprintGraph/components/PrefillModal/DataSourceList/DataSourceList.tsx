@@ -29,7 +29,9 @@ export const DataSourceList = ({
     >
       {Object.entries(dataSources).map(([group, items]) => (
         <AccordionItem value={group} key={group} className="bg-accent">
-          <AccordionTrigger>{group}</AccordionTrigger>
+          <AccordionTrigger>
+            <div data-testid="data-source-list-group">{group}</div>
+          </AccordionTrigger>
           <AccordionContent className="space-y-2 pl-4 pr-1">
             {items.map((item) => (
               <div
@@ -40,6 +42,7 @@ export const DataSourceList = ({
                     "border border-gray-300 bg-background",
                 )}
                 onClick={() => onSelectItem(item)}
+                data-testid="data-source-list-label"
               >
                 {item.label}
               </div>
