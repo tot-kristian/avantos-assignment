@@ -33,7 +33,11 @@ export const Drawer = ({
         </SheetHeader>
         <div className="grid flex-1 auto-rows-min gap-6 px-4">{children}</div>
         <SheetFooter>
-          <Button variant="outline" onClick={onClose}>
+          <Button
+            variant="outline"
+            onClick={onClose}
+            data-testid="sheet-close-button"
+          >
             Close
           </Button>
         </SheetFooter>
