@@ -69,7 +69,10 @@ export const PrefillModal = ({
       description="Select elements from the lists below"
       size="wide"
     >
-      <div className="flex flex-row justify-between gap-3 overflow-y-scroll max-h-[70vh]">
+      <div
+        className="flex flex-row justify-between gap-3 overflow-y-scroll max-h-[70vh]"
+        data-testid="prefill-modal"
+      >
         <div>
           <span className="font-semibold">Available data</span>
           <DataSourceList
@@ -86,8 +89,15 @@ export const PrefillModal = ({
           </div>
         </div>
       </div>
-      <div className="flex justify-end gap-x-2 mt-3">
-        <Button variant="outline" onClick={() => onClose()}>
+      <div
+        className="flex justify-end gap-x-2 mt-3"
+        data-testid="prefill-modal-actions"
+      >
+        <Button
+          variant="outline"
+          onClick={() => onClose()}
+          data-testid="prefill-modal-cancel-button"
+        >
           Cancel
         </Button>
         <Button
@@ -95,6 +105,7 @@ export const PrefillModal = ({
           disabled={!hasSelection}
           className={!hasSelection ? "opacity-50 cursor-not-allowed" : ""}
           onClick={() => onSelect()}
+          data-testid="prefill-modal-select-button"
         >
           Select
         </Button>

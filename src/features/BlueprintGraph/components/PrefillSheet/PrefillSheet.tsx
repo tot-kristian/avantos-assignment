@@ -19,8 +19,12 @@ export const PrefillSheet = () => {
       <div className="grid gap-3" data-testid="prefill-sheet">
         {selectedNode && (
           <>
-            <p>Node ID: {selectedNode.id}</p>
-            <p>Name: {selectedNode.data.name}</p>
+            <p data-testId="prefill-sheet-node-id">
+              Node ID: {selectedNode.id}
+            </p>
+            <p data-testId="prefill-sheet-name">
+              Name: {selectedNode.data.name}
+            </p>
             <PrefillSheetContent />
           </>
         )}

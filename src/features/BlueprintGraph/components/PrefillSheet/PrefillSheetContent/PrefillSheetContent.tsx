@@ -20,7 +20,7 @@ export const PrefillSheetContent = () => {
   const formFieldsWithPrefill = getFormFieldsWithPrefill(node, form);
 
   return (
-    <>
+    <div data-testid="prefill-sheet-content">
       {formFieldsWithPrefill.map(({ key, hasMapper }) => {
         return (
           <div
@@ -30,6 +30,7 @@ export const PrefillSheetContent = () => {
               setSelectedField(key);
               setModalOpen(true);
             }}
+            data-testid="prefill-sheet-content-select-div"
           >
             <div>
               <span className="font-medium">{key}</span>
@@ -44,6 +45,7 @@ export const PrefillSheetContent = () => {
                     e.stopPropagation();
                     clearNode(key);
                   }}
+                  data-testid="prefill-sheet-content-clear-button"
                 >
                   <XIcon className="h-4 w-4" />
                   <span className="sr-only">Clear</span>
@@ -58,6 +60,6 @@ export const PrefillSheetContent = () => {
         setModalOpen={setModalOpen}
         selectedField={selectedField}
       />
-    </>
+    </div>
   );
 };
